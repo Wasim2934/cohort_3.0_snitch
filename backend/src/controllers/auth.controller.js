@@ -191,9 +191,9 @@ export async function getMe(req, res) {
     message: "User data fetch successfully",
     data: {
       user: {
+        id: user._id,
         email: user.email,
         name: user.name,
-        id: user._id,
       },
     },
   });
