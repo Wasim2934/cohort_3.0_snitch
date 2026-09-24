@@ -3,30 +3,19 @@ import { body, validationResult } from "express-validator";
 // for register validation
 export const registerValidator = [
   body("email")
-    .exists()
-    .withMessage("Email is required")
-    .bail()
+    .exists().withMessage("Email is required").bail()
     .trim()
-    .isEmail()
-    .withMessage("Enter valid email address"),
+    .isEmail().withMessage("Enter valid email address"),
   body("name")
-    .exists()
-    .withMessage("Name is required")
-    .bail()
-    .isString()
-    .withMessage("Name must be a String")
+    .exists().withMessage("Name is required").bail()
+    .isString() .withMessage("Name must be a String")
     .trim()
-    .isLength({ min: 2, max: 50 })
-    .withMessage("Name length must be between 2 to 50 characters"),
+    .isLength({ min: 2, max: 50 }).withMessage("Name length must be between 2 to 50 characters"),
   body("password")
-    .exists()
-    .withMessage("Password is Required")
-    .bail()
-    .isString()
-    .withMessage("Password must be a String")
+    .exists() .withMessage("Password is Required").bail()
+    .isString().withMessage("Password must be a String")
     .trim()
-    .isLength({ min: 6 })
-    .withMessage("Password must be minimum 6 character long"),
+    .isLength({ min: 6 }).withMessage("Password must be minimum 6 character long"),
   (req, res, next) => {
     const errors = validationResult(req);
 
