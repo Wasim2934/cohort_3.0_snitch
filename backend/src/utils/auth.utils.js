@@ -28,11 +28,11 @@ export function createRefreshToken({ userId, role }) {
 }
 
 export function readAccessToken(accessToken) {
-  const decoded = jwt.verify(accessToken, config.ACCESS_TOKEN_SECRET)
-  return decoded
+  const decoded = jwt.verify(accessToken, config.ACCESS_TOKEN_SECRET);
+  return decoded;
 }
 
 export function readRefreshToken(refreshToken) {
-  const decoded = jwt.verify(refreshToken, config.REFRESH_TOKEN_SECRET)
-  return decoded
+  const decoded = jwt.verify(refreshToken, config.REFRESH_TOKEN_SECRET);
+  return decoded;
 }
