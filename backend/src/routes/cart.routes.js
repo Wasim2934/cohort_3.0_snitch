@@ -1,18 +1,14 @@
-import { Router } from 'express';
+import { Router } from "express";
 import { addToCartValidator } from "../validators/cart.validator.js";
-import { authenticate } from "../middlewares/auth.middleware.js"
-import { addToCart, getCart } from "../controller/cart.controller.js"
+import { authenticate } from "../middlewares/auth.middleware.js";
+import { addToCart, getCart } from "../controller/cart.controller.js";
 
 const router = Router();
 
-// add to cart 
-router.post("/", authenticate, addToCartValidator, addToCart)
+// add to cart
+router.post("/", authenticate, addToCartValidator, addToCart);
 
 // get all cart products
-router.get("/",authenticate, getCart)
-
-
-
-
+router.get("/", authenticate, getCart);
 
 export default router;
