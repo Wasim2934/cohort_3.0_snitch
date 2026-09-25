@@ -86,7 +86,7 @@ export async function addToCart(req, res) {
 export async function getCart(req, res) {
   const cart = await cartModel.findOne({ user: req.user.userId });
   if (!cart) {
-    await cartModel.create({ user: req.user.userId });
+    cart = await cartModel.create({ user: req.user.userId });
   }
 
   return res.status(200).json({
