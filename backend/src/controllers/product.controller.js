@@ -61,24 +61,22 @@ export async function listAllProductsToSeller(req, res) {
 }
 
 export async function unlistProduct(req, res) {
+  const { id } = req.params;
 
-    const { id } = req.params
+  const product = await productModel.findById(id);
 
-    const product = await productModel.findById(id)
+  if (!product) {
+    return res.status(404).json({
+      message: "product not found by id",
+    });
+  }
 
-    if (!product) {
-        return res.status(404).json({
-            message: "product not found by id"
-        })
-    }
+  // –––––––––––––––––– make product unPublished –––––––––––––––––––––
+  await productModel.findByIdAndUpdate(id, {
+    published: false,
+  });
 
-    // –––––––––––––––––– make product unPublished –––––––––––––––––––––
-    await productModel.findByIdAndUpdate(id, {
-        published: false
-    })
-
-    return res.status(200).json({
-        message: "Product unpublished successfully"
-    })
-
+  return res.status(200).json({
+    message: "Product unpublished successfully",
+  });
 }
