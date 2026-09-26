@@ -53,7 +53,4 @@ router.patch("/unlist/:id", authenticate, authenticateSeller, unlistProductValid
 router.patch("/list/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
 
 
-
-
-
 export default router;
