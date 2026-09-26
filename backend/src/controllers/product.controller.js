@@ -1,6 +1,7 @@
 import productModel from "../models/product.model.js"
 import { uploadFile } from "../services/storage.service.js"
 
+// create product
 export async function createProduct(req, res) {
 
     console.log(req.body)
@@ -42,6 +43,7 @@ export async function createProduct(req, res) {
     })
 }
 
+// get product
 export async function listAllProducts(req, res) {
     const products = await productModel.find()
 
