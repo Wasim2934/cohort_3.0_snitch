@@ -1,9 +1,9 @@
 import express from "express";
-import { createProductValidator } from "../validators/product.validator.js";
+import { createProductValidator, listProductValidator, unlistProductValidator } from "../validators/product.validator.js";
 
 import multer from "multer";
 import { authenticate, authenticateSeller } from "../middlewares/auth.middleware.js";
-import { createProduct, listAllProducts, listAllProductsToSeller, unlistProduct } from "../controllers/product.controller.js";
+import { createProduct, listAllProducts, listAllProductsToSeller, listProduct, unlistProduct } from "../controllers/product.controller.js";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -46,11 +46,11 @@ router.get("/seller", authenticate, authenticateSeller, listAllProductsToSeller)
 
 // method - patch
 // route - /api/products/unlist/:id
-router.patch("/unlist/:id", authenticate, authenticateSeller, unlistProduct)
+router.patch("/unlist/:id", authenticate, authenticateSeller, unlistProductValidator, unlistProduct)
 
 // method - patch
 // route - /api/products/unlist/:id
-router.patch("/unlist/:id", authenticate, authenticateSeller, unlistProduct)
+router.patch("/list/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
 
 
 
