@@ -2,8 +2,8 @@ import express from "express";
 import { createProductValidator } from "../validators/product.validator.js";
 
 import multer from "multer";
-import { authenticate } from "../middlewares/auth.middleware.js";
-import { createProduct, listAllProducts } from "../controllers/product.controller.js";
+import { authenticate, authenticateSeller } from "../middlewares/auth.middleware.js";
+import { createProduct, listAllProducts, listAllProductsToSeller } from "../controllers/product.controller.js";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -15,6 +15,8 @@ const upload = multer({
 
 const router = express.Router();
 
+// method - post 
+// route - /api/products
 router.post("/", authenticate,
   (req, res, next) => {
     if (req.user.role !== "seller") {
@@ -34,6 +36,20 @@ router.post("/", authenticate,
   createProduct,
 );
 
+// method - get
+// route - /api/products
 router.get("/", authenticate, listAllProducts)
+
+// method - get
+// route - /api/products/seller
+router.get("/seller", authenticate, authenticateSeller, listAllProductsToSeller)
+
+// method - patch
+// route - /api/products/unlist/:id
+router.patch("/unlist/:id", authenticate, authenticateSeller, )
+
+
+
+
 
 export default router;
