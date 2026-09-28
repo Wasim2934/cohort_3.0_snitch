@@ -92,7 +92,7 @@ export async function listProduct(req, res) {
     });
   }
 
-  // –––––––––––––––––– make product unPublished –––––––––––––––––––––
+  // –––––––––––––––––– make product published –––––––––––––––––––––
   await productModel.findByIdAndUpdate(id, {
     published: true,
   });
