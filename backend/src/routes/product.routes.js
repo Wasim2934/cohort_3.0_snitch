@@ -18,14 +18,7 @@ const router = express.Router();
 // method - post 
 // route - /api/products
 router.post("/", authenticate,
-  (req, res, next) => {
-    if (req.user.role !== "seller") {
-      return res.status(403).json({
-        message: "user is not authorize to create products",
-      });
-    }
-    next();
-  },
+  authenticateSeller,
   upload.array("images"),
   (req, res, next) => {
     req.body?.price && (req.body.price = JSON.parse(req.body.price));
