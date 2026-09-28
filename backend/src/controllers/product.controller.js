@@ -6,15 +6,15 @@ export async function createProduct(req, res) {
   console.log(req.files);
 
   const filesUrls = await Promise.all(
-    req.files.map(async (file) => {(property) originalname: any
+    req.files.map(async (file) => {
       const response = await uploadFile({
         buffer: file.buffer,
-        originalname: file.originalname
-      })
+        originalname: file.originalname,
+      });
 
-      return response.url
-    })
-  )
+      return response.url;
+    }),
+  );
 
   console.log(filesUrls);
 
@@ -39,7 +39,7 @@ export async function createProduct(req, res) {
 }
 
 export async function listAllProducts(req, res) {
-  const products = await productModel.find();
+  const products = await productModel.find({ published: true });
 
   res.status(200).json({
     message: "Products data fetched successfully",

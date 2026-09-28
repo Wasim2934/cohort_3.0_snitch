@@ -17,6 +17,7 @@ const router = express.Router();
 
 // method - post 
 // route - /api/products
+// access - seller
 router.post("/", authenticate, authenticateSeller,
   upload.array("images"),
   (req, res, next) => {
@@ -35,15 +36,18 @@ router.get("/", authenticate, listAllProducts)
 
 // method - get
 // route - /api/products/seller
+// access - seller
 router.get("/seller", authenticate, authenticateSeller, listAllProductsToSeller)
 
 // method - patch
 // route - /api/products/unlist/:id
+// access - seller
 router.patch("/unlist/:id", authenticate, authenticateSeller, unlistProductValidator, unlistProduct)
 
 // method - patch
 // route - /api/products/unlist/:id
-router.patch("/list/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
+// access - seller
+router.patch("/unlist/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
 
 
 export default router;
