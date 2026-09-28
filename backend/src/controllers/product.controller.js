@@ -5,16 +5,16 @@ export async function createProduct(req, res) {
   console.log(req.body);
   console.log(req.files);
 
-  const filesUrls = [];
+  const filesUrls = await Promise.all(
+    req.files.map(async (file) => {(property) originalname: any
+      const response = await uploadFile({
+        buffer: file.buffer,
+        originalname: file.originalname
+      })
 
-  for (let i = 0; i < req.files.length; i++) {
-    const response = await uploadFile({
-      buffer: req.files[i].buffer,
-      fileName: req.files[i].originalname,
-    });
-
-    filesUrls.push(response.url);
-  }
+      return response.url
+    })
+  )
 
   console.log(filesUrls);
 
@@ -82,26 +82,22 @@ export async function unlistProduct(req, res) {
 }
 
 export async function listProduct(req, res) {
+  const { id } = req.params;
 
-    const { id } = req.params
+  const product = await productModel.findById(id);
 
-    const product = await productModel.findById(id)
+  if (!product) {
+    return res.status(404).json({
+      message: "product not found by id",
+    });
+  }
 
-    if (!product) {
-        return res.status(404).json({
-            message: "product not found by id"
-        })
-    }
+  // –––––––––––––––––– make product unPublished –––––––––––––––––––––
+  await productModel.findByIdAndUpdate(id, {
+    published: true,
+  });
 
-    // –––––––––––––––––– make product unPublished –––––––––––––––––––––
-    await productModel.findByIdAndUpdate(id, {
-        published: true
-    })
-
-    return res.status(200).json({
-        message: "Product published successfully"
-    })
-
+  return res.status(200).json({
+    message: "Product published successfully",
+  });
 }
-
-

@@ -30,6 +30,7 @@ router.post("/", authenticate, authenticateSeller,
 
 // method - get
 // route - /api/products
+// access - user
 router.get("/", authenticate, listAllProducts)
 
 // method - get
