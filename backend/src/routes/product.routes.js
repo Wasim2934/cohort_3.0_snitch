@@ -20,7 +20,7 @@ const router = express.Router();
 // access - seller
 router.post("/", authenticate, authenticateSeller,
   upload.array("images"),
-  (req, res, next) => {
+  (req, _, next) => {
     req.body?.price && (req.body.price = JSON.parse(req.body.price));
     req.body?.sizes && (req.body.sizes = JSON.parse(req.body.sizes));
     next();

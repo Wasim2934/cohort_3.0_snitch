@@ -96,14 +96,7 @@ export async function login(req, res) {
     httpOnly: true,
   });
 
-  await userModel.findOneAndUpdate(
-    {
-      email,
-    },
-    {
-      refreshToken,
-    },
-  );
+  await userModel.findOneAndUpdate({ email }, { refreshToken });
 
   res.status(200).json({
     message: "user loggedIn successfully",
