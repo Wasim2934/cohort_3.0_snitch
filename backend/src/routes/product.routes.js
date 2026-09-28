@@ -17,8 +17,7 @@ const router = express.Router();
 
 // method - post 
 // route - /api/products
-router.post("/", authenticate,
-  authenticateSeller,
+router.post("/", authenticate, authenticateSeller,
   upload.array("images"),
   (req, res, next) => {
     req.body?.price && (req.body.price = JSON.parse(req.body.price));
