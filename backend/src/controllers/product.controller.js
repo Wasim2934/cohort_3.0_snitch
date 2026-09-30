@@ -2,16 +2,21 @@ import productModel from "../models/product.model.js";
 import { uploadFile } from "../services/storage.service.js";
 
 export async function createProduct(req, res) {
+  console.log(req.body);
+  console.log(req.files);
+
   const filesUrls = await Promise.all(
-    (req.files ?? []).map(async (file) => {
+    req.files.map(async (file) => {
       const response = await uploadFile({
         buffer: file.buffer,
-        originalname: file.originalname,
+        fileName: file.originalname,
       });
 
       return response.url;
     }),
   );
+
+  console.log(filesUrls);
 
   const product = await productModel.create({
     title: req.body.title,
@@ -58,7 +63,7 @@ export async function listAllProductsToSeller(req, res) {
 export async function unlistProduct(req, res) {
   const { id } = req.params;
 
-  const product = await productModel.findOne({ _id: id, seller: req.user.userId });
+  const product = await productModel.findById(id);
 
   if (!product) {
     return res.status(404).json({
@@ -66,8 +71,14 @@ export async function unlistProduct(req, res) {
     });
   }
 
+  if (product.seller.toString() !== req.user.userId) {
+    return res.status(403).json({
+      message: "You are not authorized to manage this product",
+    });
+  }
+
   // –––––––––––––––––– make product unPublished –––––––––––––––––––––
-  await productModel.findOneAndUpdate({ _id: id, seller: req.user.userId }, {
+  await productModel.findByIdAndUpdate(id, {
     published: false,
   });
 
@@ -79,7 +90,7 @@ export async function unlistProduct(req, res) {
 export async function listProduct(req, res) {
   const { id } = req.params;
 
-  const product = await productModel.findOne({ _id: id, seller: req.user.userId });
+  const product = await productModel.findById(id);
 
   if (!product) {
     return res.status(404).json({
@@ -87,8 +98,14 @@ export async function listProduct(req, res) {
     });
   }
 
+  if (product.seller.toString() !== req.user.userId) {
+    return res.status(403).json({
+      message: "You are not authorized to manage this product",
+    });
+  }
+
   // –––––––––––––––––– make product published –––––––––––––––––––––
-  await productModel.findOneAndUpdate({ _id: id, seller: req.user.userId }, {
+  await productModel.findByIdAndUpdate(id, {
     published: true,
   });
 

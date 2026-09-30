@@ -8,8 +8,7 @@ import {
 
 // user register
 export async function register(req, res) {
-  const { email, name, password } = req.body;
-    const { role = "user" } = req.body;
+  const { email, name, password, role = "user" } = req.body;
 
   const isUserAlreadyExists = await userModel.findOne({
     email,
@@ -166,8 +165,8 @@ export async function refresh(req, res) {
         user: {
           email: user.email,
           name: user.name,
-          role: user.role,
           id: user._id,
+          role: user.role,
         },
         accessToken,
       },

@@ -31,8 +31,8 @@ router.post("/", authenticate, authenticateSeller,
 
 // method - get
 // route - /api/products
-// access - user
-router.get("/", authenticate, listAllProducts)
+// access - public storefront
+router.get("/", listAllProducts)
 
 // method - get
 // route - /api/products/seller
