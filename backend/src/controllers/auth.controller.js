@@ -9,6 +9,7 @@ import {
 // user register
 export async function register(req, res) {
   const { email, name, password } = req.body;
+    const { role = "user" } = req.body;
 
   const isUserAlreadyExists = await userModel.findOne({
     email,
@@ -29,6 +30,7 @@ export async function register(req, res) {
   const user = await userModel.create({
     email,
     name,
+    role,
     passwordHash: await bcrypt.hash(password, 12),
   });
 
@@ -56,6 +58,7 @@ export async function register(req, res) {
         id: user._id,
         email: user.email,
         name: user.name,
+        role: user.role,
       },
       accessToken,
     },
@@ -105,6 +108,7 @@ export async function login(req, res) {
         id: user._id,
         email: user.email,
         name: user.name,
+        role: user.role,
       },
       accessToken,
     },
@@ -162,6 +166,7 @@ export async function refresh(req, res) {
         user: {
           email: user.email,
           name: user.name,
+          role: user.role,
           id: user._id,
         },
         accessToken,
@@ -187,6 +192,7 @@ export async function getMe(req, res) {
         id: user._id,
         email: user.email,
         name: user.name,
+        role: user.role,
       },
     },
   });

@@ -6,7 +6,7 @@ export async function addToCart(req, res) {
 
   const product = await productModel.findById(productId);
 
-  if (!product) {
+  if (!product || !product.published) {
     return res.status(404).json({
       message: "Product not found",
     });
@@ -84,7 +84,9 @@ export async function addToCart(req, res) {
 }
 
 export async function getCart(req, res) {
-  const cart = await cartModel.findOne({ user: req.user.userId });
+  let cart = await cartModel
+    .findOne({ user: req.user.userId })
+    .populate("products.product");
   if (!cart) {
     cart = await cartModel.create({ user: req.user.userId });
   }

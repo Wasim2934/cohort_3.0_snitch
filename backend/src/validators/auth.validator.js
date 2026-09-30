@@ -16,6 +16,10 @@ export const registerValidator = [
     .isString().withMessage("Password must be a String")
     .trim()
     .isLength({ min: 6 }).withMessage("Password must be minimum 6 character long"),
+  body("role")
+    .optional()
+    .isIn(["user", "seller"])
+    .withMessage("Role must be user or seller"),
   (req, res, next) => {
     const errors = validationResult(req);
 
