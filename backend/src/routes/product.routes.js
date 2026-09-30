@@ -47,7 +47,7 @@ router.patch("/unlist/:id", authenticate, authenticateSeller, unlistProductValid
 // method - patch
 // route - /api/products/unlist/:id
 // access - seller
-router.patch("/unlist/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
+router.patch("/list/:id", authenticate, authenticateSeller, listProductValidator, listProduct)
 
 
 export default router;
