@@ -1201,7 +1201,7 @@ h2 em,
     clip-path: inset(0);
   }
 }
-
+ 
 @media (max-width: 850px) {
   .site-header {
     padding-inline: 4%;
