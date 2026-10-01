@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const storedSession = (() => {
-  try { return JSON.parse(localStorage.getItem("snitch-session") || "null"); }
-  catch { return null; }
+  try {
+    return JSON.parse(localStorage.getItem("snitch-session") || "null");
+  } catch {
+    return null;
+  }
 })();
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: storedSession?.user || null, accessToken: storedSession?.accessToken || null },
+  initialState: {
+    user: storedSession?.user || null,
+    accessToken: storedSession?.accessToken || null,
+  },
   reducers: {
     saveSession(state, action) {
       state.user = action.payload.user;
